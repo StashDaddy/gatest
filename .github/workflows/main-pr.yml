@@ -1,0 +1,3 @@
+# Github test action during pull requests
+#name: CI PR Test
+#on: [pull_request]
