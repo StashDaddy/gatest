@@ -1,10 +1,11 @@
 # Github test action during pushes
+# YML workflow reference: https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
 name: CI Push Test
 on: [push]
 jobs:
-  syntax:
+  syntax_check:
     name: PHP Syntax Checking
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     #env:
     #  DB_USERNAME: root
     #  DB_PASSWORD: yii
@@ -26,7 +27,14 @@ jobs:
       - name: PHP Version
         run: |
           php -v
+      - name: Edit File
+        run: |
+          echo Test Content > /tmp/testfile.txt
       - name: List Files
         run: |
-          ls -lart
+          ls -lart /tmp
+      - name: File Content
+        run: |
+          cat /tmp/testfile.txt
+
 
