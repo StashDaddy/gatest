@@ -3,8 +3,8 @@
 name: CI Push Test
 on: [push]
 jobs:
-  syntax_check:
-    name: PHP Syntax Checking
+  php_check:
+    name: PHP Checks
     runs-on: ubuntu-18.04
     #env:
     #  DB_USERNAME: root
@@ -45,9 +45,14 @@ jobs:
       #  # To Consider: https://github.com/proget-hq/phpstan-yii2
 
 
+      - name: PHPCS Installed Sniffs
+        if: ${{ alwyas() }}
+        run: phpcs -i
 
-      #- name: PHPCS
-      #  run: phpcs
+      # Requires .phpcs.xml
+      - name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
+        if: ${{ always() }}
+        run: phpcs -q .
 
       # Static Analyzer
       # Requires .phan/config.php file
