@@ -65,7 +65,8 @@ jobs:
       - name: get current directory
         run: pwd
 
-      # Static Analyzer
+      # phplint does not pickup functions with missing arguments (e.g. date()) - may not be useful compared to phpstan
+      # Syntax Checker
       # Requires install via composer (composer require overtrue/phplint)
       #- name: Install PHP-Lint via Composer # https://github.com/michaelw90/PHP-Lint/commit/8c168c7ddac93344b4a5d32e41312ecf46b7f2a2
       #  if: ${{ always() }}
