@@ -52,7 +52,7 @@ jobs:
       #- name: PHPCS
       #  run: phpcs
 
-      - name: PHPMD #
+      #- name: PHPMD #
         # run:
 
 #      - name: Edit File
