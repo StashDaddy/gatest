@@ -30,7 +30,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, intl, gd, imagick, zip, dom, mysql
           coverage: none #optional
-          tools: codeception, phpunit, phpcs, phpmd, psalm, phan, phpstan, cs2pr
+          tools: codeception, phpunit, phpcs, phpmd, phan, phpstan, cs2pr
 
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
@@ -38,24 +38,20 @@ jobs:
       #- name: PHP Version
       #  run: php -v
 
-      - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
-        #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
-        run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
-        # To Consider: https://github.com/proget-hq/phpstan-yii2
+      #- name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
+      #  #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
+      #  run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
+      #  # To Consider: https://github.com/proget-hq/phpstan-yii2
 
-      - name: Psalm Help
-        if: ${{ always() }}
-        run: psalm --help
 
-      - name: PSalm  #https://psalm.dev, https://psalm.dev/
-        if: ${{ always() }}
-        run: psalm
 
       #- name: PHPCS
       #  run: phpcs
 
-      #- name: PHPMD #
-        # run:
+      - name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
+        if: ${{ always() }}
+        run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
+
 
 #      - name: Edit File
 #        run: |
