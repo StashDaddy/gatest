@@ -35,6 +35,9 @@ jobs:
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
+      - name: Composer - Install PHPLint
+        run: composer require overtrue/phplint
+
       #- name: PHP Version
       #  run: php -v
 
@@ -44,26 +47,29 @@ jobs:
       #  run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
       #  # To Consider: https://github.com/proget-hq/phpstan-yii2
 
-
-      - name: PHPCS Installed Sniffs
-        if: ${{ always() }}
-        run: phpcs -i
-
       # Requires .phpcs.xml
-      - name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
-        if: ${{ always() }}
-        run: phpcs -q .
+      # Available standards:  MySource, PEAR, PSR1, PSR12, PSR2, Squiz and Zend (from phpcs -i)
+      #- name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
+      #  if: ${{ always() }}
+      ##  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
+      #  run: phpcs -q .
 
       # Static Analyzer
       # Requires .phan/config.php file
-      - name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
-        if: ${{ always() }}
-        run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
+      #- name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
+      #  if: ${{ always() }}
+      #  run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
 
       # Static Analyzer
-      - name: Phan # https://github.com/phan/phan, https://github.com/phan/phan/wiki/
+      #- name: Phan # https://github.com/phan/phan, https://github.com/phan/phan/wiki/
+      #  if: ${{ always() }}
+      #  run: phan
+
+      # Static Analyzer
+      # Requires install via composer (composer require overtrue/phplint)
+      - name: PHP-Lint
         if: ${{ always() }}
-        run: phan
+        run: phplint ./
 
 
 #      - name: Edit File
