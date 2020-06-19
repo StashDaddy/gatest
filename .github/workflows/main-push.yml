@@ -62,9 +62,8 @@ jobs:
       #  if: ${{ always() }}
       #  run: phan
 
-
-      -name: get current directory
-       run: pwd
+      - name: get current directory
+        run: pwd
 
       # Static Analyzer
       # Requires install via composer (composer require overtrue/phplint)
