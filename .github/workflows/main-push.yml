@@ -38,6 +38,7 @@ jobs:
       #- name: PHP Version
       #  run: php -v
 
+      # Static Analyzer
       #- name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
       #  #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
       #  run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
@@ -48,9 +49,16 @@ jobs:
       #- name: PHPCS
       #  run: phpcs
 
+      # Static Analyzer
+      # Requires .phan/config.php file
       - name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
         if: ${{ always() }}
         run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
+
+      # Static Analyzer
+      - name: Phan # https://github.com/phan/phan, https://github.com/phan/phan/wiki/
+        if: ${{ always() }}
+        run: phan
 
 
 #      - name: Edit File
