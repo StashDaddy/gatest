@@ -39,7 +39,8 @@ jobs:
         run: php -v
 
       - name: PHPStan  # https://github.com/phpstan/phpstan
-        run: phpstan analyse . --error-format=checkstyle | cs2pr
+        #run: phpstan analyse . --error-format=checkstyle | cs2pr
+        run: phpstan analyse . --error-format=table
 
       #- name: PHPCS
       #  run: phpcs
