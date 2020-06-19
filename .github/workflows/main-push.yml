@@ -44,9 +44,11 @@ jobs:
         # To Consider: https://github.com/proget-hq/phpstan-yii2
 
       - name: Psalm Help
+        if: ${{ always() }}
         run: psalm --help
 
       - name: PSalm  #https://psalm.dev, https://psalm.dev/
+        if: ${{ always() }}
         run: psalm
 
       #- name: PHPCS
