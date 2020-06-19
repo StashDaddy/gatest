@@ -25,15 +25,15 @@ return [
     // Thus, both first-party and third-party code being used by
     // your application should be included in this list.
     'directory_list' => [
-        'src',
-        'vendor/symfony/console',
+        '.',
+        //'vendor/symfony/console',
     ],
 
     // A regex used to match every file name that you want to
     // exclude from parsing. Actual value will exclude every
     // "test", "tests", "Test" and "Tests" folders found in
     // "vendor/" directory.
-    'exclude_file_regex' => '@^vendor/.*/(tests?|Tests?)/@',
+    //'exclude_file_regex' => '@^vendor/.*/(tests?|Tests?)/@',
 
     // A directory list that defines files that will be excluded
     // from static analysis, but whose class and method
@@ -46,7 +46,7 @@ return [
     //       party code, directories containing that code
     //       should be added to both the `directory_list`
     //       and `exclude_analysis_directory_list` arrays.
-    'exclude_analysis_directory_list' => [
-        'vendor/'
-    ],
+    //'exclude_analysis_directory_list' => [
+    //    'vendor/'
+    //],
 ];
