@@ -35,15 +35,25 @@ jobs:
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
-      - name: PHP Version
-        run: php -v
+      #- name: PHP Version
+      #  run: php -v
 
-      - name: PHPStan  # https://github.com/phpstan/phpstan
-        #run: phpstan analyse . --error-format=checkstyle | cs2pr
-        run: phpstan analyse . --error-format=table
+      - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
+        #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
+        run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
+        # To Consider: https://github.com/proget-hq/phpstan-yii2
+
+      - name: Psalm Help
+        run: psalm --help
+
+      - name: PSalm  #https://psalm.dev, https://psalm.dev/
+        run: psalm
 
       #- name: PHPCS
       #  run: phpcs
+
+      - name: PHPMD #
+        # run:
 
 #      - name: Edit File
 #        run: |
