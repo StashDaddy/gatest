@@ -46,7 +46,7 @@ jobs:
 
 
       - name: PHPCS Installed Sniffs
-        if: ${{ alwyas() }}
+        if: ${{ always() }}
         run: phpcs -i
 
       # Requires .phpcs.xml
