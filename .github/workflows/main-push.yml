@@ -67,18 +67,13 @@ jobs:
 
       # Static Analyzer
       # Requires install via composer (composer require overtrue/phplint)
-      - name: Install PHP-Lint via Composer
+      - name: Install PHP-Lint via Composer # https://github.com/overtrue/phplint, https://github.com/michaelw90/PHP-Lint/commit/8c168c7ddac93344b4a5d32e41312ecf46b7f2a2
         if: ${{ always() }}
         run: mkdir phplint && cd phplint && composer require overtrue/phplint && ln -s ./vendor/bin/phplint /usr/local/bin/phplint && cd ..
 
-      - name: dir list
-        if: ${{ always() }}
-        run: ls -R && tree .
-
       - name: PHP-Lint
         if: ${{ always() }}
-        run: ./phplint/vendor/bin/phplint ./
-
+        run: ./phplint/vendor/bin/phplint -n ./ --exclude=vendor
 
 #      - name: Edit File
 #        run: |
