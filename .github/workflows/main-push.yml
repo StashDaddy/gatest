@@ -71,9 +71,13 @@ jobs:
         if: ${{ always() }}
         run: mkdir phplint && cd phplint && composer require overtrue/phplint && ln -s ./vendor/bin/phplint /usr/local/bin/phplint && cd ..
 
+      - name: dir list
+        if: ${{ always() }}
+        run: ls -R && tree .
+
       - name: PHP-Lint
         if: ${{ always() }}
-        run: ./phplint/phplint ./
+        run: ./phplint/vendor/bin/phplint ./
 
 
 #      - name: Edit File
