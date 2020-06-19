@@ -69,11 +69,11 @@ jobs:
       # Requires install via composer (composer require overtrue/phplint)
       - name: Install PHP-Lint via Composer
         if: ${{ always() }}
-        run: mkdir /phplint && cd /phplint && composer require overtrue/phplint && ln -s /phplint/vendor/bin/phplint /usr/local/bin/phplint && cd /
+        run: mkdir phplint && cd phplint && composer require overtrue/phplint && ln -s ./vendor/bin/phplint /usr/local/bin/phplint && cd ..
 
       - name: PHP-Lint
         if: ${{ always() }}
-        run: /phplint/phplint ./
+        run: ./phplint/phplint ./
 
 
 #      - name: Edit File
