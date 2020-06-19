@@ -39,10 +39,10 @@ jobs:
       #  run: php -v
 
       # Static Analyzer
-      #- name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
-      #  #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
-      #  run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
-      #  # To Consider: https://github.com/proget-hq/phpstan-yii2
+      - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
+        #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
+        run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
+        # To Consider: https://github.com/proget-hq/phpstan-yii2
 
       # Requires .phpcs.xml
       # Available standards:  MySource, PEAR, PSR1, PSR12, PSR2, Squiz and Zend (from phpcs -i)
@@ -67,13 +67,13 @@ jobs:
 
       # Static Analyzer
       # Requires install via composer (composer require overtrue/phplint)
-      - name: Install PHP-Lint via Composer # https://github.com/michaelw90/PHP-Lint/commit/8c168c7ddac93344b4a5d32e41312ecf46b7f2a2
-        if: ${{ always() }}
-        run: mkdir phplint && cd phplint && composer require overtrue/phplint && ln -s ./vendor/bin/phplint /usr/local/bin/phplint && cd ..
+      #- name: Install PHP-Lint via Composer # https://github.com/michaelw90/PHP-Lint/commit/8c168c7ddac93344b4a5d32e41312ecf46b7f2a2
+      #  if: ${{ always() }}
+      #  run: mkdir phplint && cd phplint && composer require overtrue/phplint && ln -s ./vendor/bin/phplint /usr/local/bin/phplint && cd ..
 
-      - name: PHP-Lint # https://github.com/overtrue/phplint
-        if: ${{ always() }}
-        run: ./phplint/vendor/bin/phplint -n ./ --exclude=vendor
+      #- name: PHP-Lint # https://github.com/overtrue/phplint
+      #  if: ${{ always() }}
+      #  run: ./phplint/vendor/bin/phplint -n ./ --exclude=vendor
 
       # Consider checkstyle during pull-requests - see https://github.com/staabm/annotate-pull-request-from-checkstyle
 
