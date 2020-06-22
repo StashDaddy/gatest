@@ -1,0 +1,2 @@
+
+  - php ./vendor/codeception/codeception/codecept run unit helpers/SupportFnTest (as an example running a specific test suite)

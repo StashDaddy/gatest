@@ -62,9 +62,6 @@ jobs:
       #  if: ${{ always() }}
       #  run: phan
 
-      - name: get current directory
-        run: pwd
-
       # phplint does not pickup functions with missing arguments (e.g. date()) - may not be useful compared to phpstan
       # Syntax Checker
       # Requires install via composer (composer require overtrue/phplint)
@@ -77,6 +74,16 @@ jobs:
       #  run: ./phplint/vendor/bin/phplint -n ./ --exclude=vendor
 
       # Consider checkstyle during pull-requests - see https://github.com/staabm/annotate-pull-request-from-checkstyle
+
+      # Codeception Testing
+      -
+
+
+
+      # Versioning
+      # See also: https://github.com/eine/actions/blob/3f0701c2f20780984590bd955839a38b75c96668/.github/workflows/push.yml#L33-L48
+      # https://github.com/ad-m/github-push-action
+      # https://github.community/t/how-does-one-commit-from-an-action/16127/5
 
 #      - name: Edit File
 #        run: |
