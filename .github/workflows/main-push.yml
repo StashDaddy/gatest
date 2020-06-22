@@ -41,7 +41,8 @@ jobs:
       # Static Analyzer
       - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
         #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
-        run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
+        #run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
+        run: phpstan analyse -c phpstan.neon --error-format=table
         # To Consider: https://github.com/proget-hq/phpstan-yii2
 
       # Requires .phpcs.xml
@@ -76,8 +77,14 @@ jobs:
       # Consider checkstyle during pull-requests - see https://github.com/staabm/annotate-pull-request-from-checkstyle
 
       # Codeception Testing
-      -
+      - name: Codeception Version
+        if: ${{ always() }}
+        run: vendor/bin/codecept --version
 
+      # Codeception Testing
+      - name: Codeception Unit Tests
+        if: ${{ always() }}
+        run: vendor/bin/codecept run unit
 
 
       # Versioning
