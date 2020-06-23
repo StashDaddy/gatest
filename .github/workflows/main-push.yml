@@ -93,6 +93,7 @@ jobs:
       # https://github.community/t/how-does-one-commit-from-an-action/16127/5
 
       - name: Edit version file
+        if: ${{ always() }}
         run: |
           echo "Date: " `date +'%m/%d/%y'` > ./VERSION
           echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
@@ -104,6 +105,7 @@ jobs:
       #    git push
 
       - name: Version File Contents
+        if: ${{ always() }}
         run: cat ./VERSION
 
 #      - name: Edit File
