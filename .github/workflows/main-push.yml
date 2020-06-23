@@ -79,12 +79,12 @@ jobs:
       # Codeception Testing
       - name: Codeception Version
         if: ${{ always() }}
-        run: vendor/bin/codecept --version
+        run: php ./vendor/codeception/codeception/codecept --version
 
       # Codeception Testing
       - name: Codeception Unit Tests
         if: ${{ always() }}
-        run: vendor/bin/codecept run unit
+        run: php ./vendor/codeception/codeception/codecept run unit
 
 
       # Versioning
