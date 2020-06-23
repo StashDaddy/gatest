@@ -35,8 +35,8 @@ jobs:
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
-      #- name: PHP Version
-      #  run: php -v
+      - name: PHP Version
+        run: php -v
 
       # Static Analyzer
       - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
@@ -91,6 +91,20 @@ jobs:
       # See also: https://github.com/eine/actions/blob/3f0701c2f20780984590bd955839a38b75c96668/.github/workflows/push.yml#L33-L48
       # https://github.com/ad-m/github-push-action
       # https://github.community/t/how-does-one-commit-from-an-action/16127/5
+
+      - name: Edit version file
+        run: |
+          echo "Date: " `date +'%m/%d/%y'` > ./VERSION
+          echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
+
+      #- name: Push updated version file
+      #  run: |
+      #    git add ./VERSION
+      #    git commit -m "Automated Version Update via Github Action"
+      #    git push
+
+      - name: Version File Contents
+        run: cat ./VERSION
 
 #      - name: Edit File
 #        run: |
