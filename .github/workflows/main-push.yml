@@ -98,11 +98,14 @@ jobs:
           echo "Date: " `date +'%m/%d/%y'` > ./VERSION
           echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
 
-      #- name: Push updated version file
-      #  run: |
-      #    git add ./VERSION
-      #    git commit -m "Automated Version Update via Github Action"
-      #    git push
+      - name: Push updated version file
+        run: |
+          git config --local user.email "infra@stash.global"
+          git config --local user.name ${GITHUB_ACTOR}
+          git add ./VERSION
+          git commit -m "Automated Version Update via Github Action"
+          git remote
+          git push
 
       - name: Version File Contents
         if: ${{ always() }}
