@@ -112,17 +112,3 @@ jobs:
         if: ${{ always() }}
         run: cat ./VERSION
 
-#      - name: Edit File
-#        run: |
-#          echo Test Content > /tmp/testfile.txt
-
-#      - name: List Files
-#        run: |
-#          ls -lart /tmp
-
-#      - name: File Content
-#        run: |
-#          cat /tmp/testfile.txt
-
-
-
