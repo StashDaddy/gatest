@@ -99,6 +99,7 @@ jobs:
           echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
 
       - name: Push updated version file
+        if: ${{ always() }}
         run: |
           git config --local user.email "infra@stash.global"
           git config --local user.name ${GITHUB_ACTOR}
