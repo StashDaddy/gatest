@@ -40,28 +40,29 @@ jobs:
 
       # Static Analyzer
       - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
+        if: ${{ always() }}
         #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
         #run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
         run: phpstan analyse -c phpstan.neon --error-format=table
         # To Consider: https://github.com/proget-hq/phpstan-yii2
 
-      # Requires .phpcs.xml
+      # May Require .phpcs.xml
       # Available standards:  MySource, PEAR, PSR1, PSR12, PSR2, Squiz and Zend (from phpcs -i)
-      #- name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
-      #  if: ${{ always() }}
-      ##  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
-      #  run: phpcs -q .
+      - name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
+        if: ${{ always() }}
+      #  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
+        run: phpcs -q .
+
+      # Static Analyzer
+      - name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
+        if: ${{ always() }}
+        run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
 
       # Static Analyzer
       # Requires .phan/config.php file
-      #- name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
-      #  if: ${{ always() }}
-      #  run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
-
-      # Static Analyzer
-      #- name: Phan # https://github.com/phan/phan, https://github.com/phan/phan/wiki/
-      #  if: ${{ always() }}
-      #  run: phan
+      - name: Phan # https://github.com/phan/phan, https://github.com/phan/phan/wiki/
+        if: ${{ always() }}
+        run: phan
 
       # phplint does not pickup functions with missing arguments (e.g. date()) - may not be useful compared to phpstan
       # Syntax Checker
@@ -85,7 +86,6 @@ jobs:
       - name: Codeception Unit Tests
         if: ${{ always() }}
         run: php ./vendor/codeception/codeception/codecept run unit
-
 
       # Versioning
       # See also: https://github.com/eine/actions/blob/3f0701c2f20780984590bd955839a38b75c96668/.github/workflows/push.yml#L33-L48
