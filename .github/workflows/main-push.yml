@@ -48,15 +48,16 @@ jobs:
 
       # May Require .phpcs.xml
       # Available standards:  MySource, PEAR, PSR1, PSR12, PSR2, Squiz and Zend (from phpcs -i)
-      - name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
-        if: ${{ always() }}
-      #  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
-        run: phpcs -q --ignore=/vendor/ .
+      # This will not flag syntax or other code errors - just style
+      #- name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
+      #  if: ${{ always() }}
+      ##  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
+      #  run: phpcs -q --ignore=/vendor/ .
 
       # Static Analyzer
       - name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
         if: ${{ always() }}
-        run: phpmd --exclude *vendor/* . ansi cleancode,design,naming
+        run: phpmd . ansi cleancode,design,naming --exclude *vendor/*
 
       # Static Analyzer
       # Requires .phan/config.php file
