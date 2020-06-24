@@ -51,7 +51,7 @@ jobs:
       - name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
         if: ${{ always() }}
       #  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
-        run: phpcs -q .
+        run: phpcs -q --ignore=/vendor/ .
 
       # Static Analyzer
       - name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
