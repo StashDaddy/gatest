@@ -95,23 +95,22 @@ jobs:
       # See also: https://github.com/eine/actions/blob/3f0701c2f20780984590bd955839a38b75c96668/.github/workflows/push.yml#L33-L48
       # https://github.com/ad-m/github-push-action
       # https://github.community/t/how-does-one-commit-from-an-action/16127/5
+      - name: Edit version file
+        if: ${{ always() }}
+        run: |
+          echo "Date: " `date +'%m/%d/%y'` > ./VERSION
+          echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
 
-      #- name: Edit version file
-      #  if: ${{ always() }}
-      #  run: |
-      #    echo "Date: " `date +'%m/%d/%y'` > ./VERSION
-      #    echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
+      - name: Push updated version file
+        if: ${{ always() }}
+        run: |
+          git config --local user.email "infra@stash.global"
+          git config --local user.name ${GITHUB_ACTOR}
+          git add ./VERSION
+          git commit -m "Automated Version Update via Github Action"
+          git remote
+          git push
 
-      #- name: Push updated version file
-      #  if: ${{ always() }}
-      #  run: |
-      #    git config --local user.email "infra@stash.global"
-      #    git config --local user.name ${GITHUB_ACTOR}
-      #    git add ./VERSION
-      #    git commit -m "Automated Version Update via Github Action"
-      #    git remote
-      #    git push
-
-      #- name: Version File Contents
-      #  if: ${{ always() }}
-      #  run: cat ./VERSION
+      - name: Version File Contents
+        if: ${{ always() }}
+        run: cat ./VERSION
