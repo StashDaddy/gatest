@@ -5,6 +5,8 @@ on:
   push:
     branches:
      - master
+    paths-ignore:
+      - 'VERSION'
 jobs:
   php_check:
     name: PHP Checks
@@ -22,6 +24,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GATEST_PAT_PUSH }}
+
+  #GATEST_PAT_PUSH
 
       # Code sniffing with phpcs, phpmd, psalm
       # Static code analysis with phan, phpstan
@@ -108,9 +114,11 @@ jobs:
           git config --local user.name ${GITHUB_ACTOR}
           git add ./VERSION
           git commit -m "Automated Version Update via Github Action"
-          git remote
           git push
-
+#git remote set-url origin "https://x-access-token:${}@github.com/${GITHUB_REPOSITORY}
+# git remote set-url origin "$origin_url"
+#"https://x-access-token:$ACCESS_TOKEN@github.com/$REPOSITORY"
+      -
       - name: Version File Contents
         if: ${{ always() }}
         run: cat ./VERSION
