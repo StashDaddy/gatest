@@ -1,10 +1,10 @@
 # Github test action during pushes
 # YML workflow reference: https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
-name: Dev Push
+name: Master PR
 on:
-  push:
+  pull_request:
     branches:
-     - develop
+     - master
 jobs:
   php_check:
     name: PHP Checks
