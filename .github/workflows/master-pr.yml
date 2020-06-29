@@ -1,0 +1,117 @@
+# Github test action during pull requests
+# YML workflow reference: https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
+name: Master PR
+on:
+  pull_request:
+    branches:
+     - master
+jobs:
+  php_check:
+    name: PHP Checks
+    runs-on: ubuntu-18.04
+    #env:
+    #  DB_USERNAME: root
+    #  DB_PASSWORD: yii
+    #  DB_CHARSET: utf8
+    #services:
+    strategy:
+      fail-fast: false
+      matrix:
+        #php-versions: ['7.2', '7.4']
+        php-versions: ['7.2']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Code sniffing with phpcs, phpmd, psalm
+      # Static code analysis with phan, phpstan
+      # Unit/Functional tests with phpunit, codeception
+      # Required support tools: cs2pr - for output formatting from phpcs and phpstan
+      #- name: Setup PHP, with composer and extensions
+      #  uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+      #  with:
+      #    php-version: ${{ matrix.php-versions }}
+      #    extensions: mbstring, intl, gd, imagick, zip, dom, mysql
+      #    coverage: none #optional
+      #    tools: codeception, phpunit, phpcs, phpmd, phan, phpstan, cs2pr
+
+      #- name: Setup problem matchers for PHP
+      #  run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - name: PHP Version
+        run: php -v
+
+      # Static Analyzer
+      #- name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
+      #  if: ${{ always() }}
+        #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
+        #run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
+      #  run: phpstan analyse -c phpstan.neon --error-format=table
+        # To Consider: https://github.com/proget-hq/phpstan-yii2
+
+      # May Require .phpcs.xml
+      # Available standards:  MySource, PEAR, PSR1, PSR12, PSR2, Squiz and Zend (from phpcs -i)
+      # This will not flag syntax or other code errors - just style
+      #- name: PHPCS # https://github.com/squizlabs/PHP_CodeSniffer, https://github.com/squizlabs/PHP_CodeSniffer/wiki
+      #  if: ${{ always() }}
+      ##  run: phpcs -q . --report=checkstyle | cs2pr --graceful-warnings  # Use this in a pull-request run only
+      #  run: phpcs -q --ignore=/vendor/ .
+
+      # Static Analyzer
+      #- name: PHPMD # https://phpmd.org, https://phpmd.org/documentation/
+      #  if: ${{ always() }}
+      #  run: phpmd . ansi cleancode,design,naming --exclude *vendor/*
+
+      # Static Analyzer
+      # Requires .phan/config.php file
+      #- name: Phan # https://github.com/phan/phan, https://github.com/phan/phan/wiki/
+      #  if: ${{ always() }}
+      #  run: phan
+
+      # phplint does not pickup functions with missing arguments (e.g. date()) - may not be useful compared to phpstan
+      # Syntax Checker
+      # Requires install via composer (composer require overtrue/phplint)
+      #- name: Install PHP-Lint via Composer # https://github.com/michaelw90/PHP-Lint/commit/8c168c7ddac93344b4a5d32e41312ecf46b7f2a2
+      #  if: ${{ always() }}
+      #  run: mkdir phplint && cd phplint && composer require overtrue/phplint && ln -s ./vendor/bin/phplint /usr/local/bin/phplint && cd ..
+
+      #- name: PHP-Lint # https://github.com/overtrue/phplint
+      #  if: ${{ always() }}
+      #  run: ./phplint/vendor/bin/phplint -n ./ --exclude=vendor
+
+      # Consider checkstyle during pull-requests - see https://github.com/staabm/annotate-pull-request-from-checkstyle
+
+      # Codeception Testing
+      #- name: Codeception Version
+      #  if: ${{ always() }}
+      #  run: php ./vendor/codeception/codeception/codecept --version
+
+      # Codeception Testing
+      #- name: Codeception Unit Tests
+      #  if: ${{ always() }}
+      #  run: php ./vendor/codeception/codeception/codecept run unit
+
+      # Versioning
+      # See also: https://github.com/eine/actions/blob/3f0701c2f20780984590bd955839a38b75c96668/.github/workflows/push.yml#L33-L48
+      # https://github.com/ad-m/github-push-action
+      # https://github.community/t/how-does-one-commit-from-an-action/16127/5
+
+      #- name: Edit version file
+      #  if: ${{ always() }}
+      #  run: |
+      #    echo "Date: " `date +'%m/%d/%y'` > ./VERSION
+      #    echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
+
+      #- name: Push updated version file
+      #  if: ${{ always() }}
+      #  run: |
+      #    git config --local user.email "infra@stash.global"
+      #    git config --local user.name ${GITHUB_ACTOR}
+      #    git add ./VERSION
+      #    git commit -m "Automated Version Update via Github Action"
+      #    git remote
+      #    git push
+
+      #- name: Version File Contents
+      #  if: ${{ always() }}
+      #  run: cat ./VERSION
