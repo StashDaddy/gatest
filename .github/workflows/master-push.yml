@@ -118,7 +118,7 @@ jobs:
 #git remote set-url origin "https://x-access-token:${}@github.com/${GITHUB_REPOSITORY}
 # git remote set-url origin "$origin_url"
 #"https://x-access-token:$ACCESS_TOKEN@github.com/$REPOSITORY"
-      -
+
       - name: Version File Contents
         if: ${{ always() }}
         run: cat ./VERSION
