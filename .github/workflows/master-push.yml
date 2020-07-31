@@ -104,8 +104,8 @@ jobs:
       - name: Edit version file
         if: ${{ always() }}
         run: |
-          echo "Date: " `date +'%m/%d/%y'` > ./VERSION
-          echo "SHA1: " ${GITHUB_SHA} >> ./VERSION
+          echo "Date:" `date +'%m/%d/%y'` > ./VERSION
+          echo "SHA1:" ${GITHUB_SHA} >> ./VERSION
 
       - name: Push updated version file
         if: ${{ always() }}

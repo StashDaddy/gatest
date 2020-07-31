@@ -42,11 +42,11 @@ jobs:
         run: php -v
 
       # Static Analyzer
-      #- name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
-      #  if: ${{ always() }}
+      - name: PHPStan  # https://github.com/phpstan/phpstan, https://phpstan.org/user-guide/
+        if: ${{ always() }}
         #run: phpstan analyse . --error-format=checkstyle | cs2pr # Use this in a pull-request run only
         #run: phpstan analyse -l 0 . --error-format=table # use loosest checks (8 is strictest)
-      #  run: phpstan analyse -c phpstan.neon --error-format=table
+        run: phpstan analyse -c phpstan.neon --error-format=table
         # To Consider: https://github.com/proget-hq/phpstan-yii2
 
       # May Require .phpcs.xml

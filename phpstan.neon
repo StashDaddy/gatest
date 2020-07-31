@@ -4,6 +4,7 @@ parameters:
 	    - ./test-syntaxerror.php
 	    - ./test-syntaxerror2.php
 	    - ./test-working.php
+	    - ./tst.php
 	excludes_analyse:
 	    - tests
 	    - vendor
